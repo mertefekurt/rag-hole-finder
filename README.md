@@ -1,39 +1,41 @@
-# rag-hole-finder
+# RAG Hole Finder
 
-![rag-hole-finder banner](assets/banner.svg)
+<p align="center">
+  <img src="assets/readme-cover.svg" alt="RAG Hole Finder cover" width="100%" />
+</p>
 
-A tiny offline diagnostic for RAG evaluation JSONL. It does not grade prose style; it looks for the more
-operational failures that make a RAG answer hard to trust.
+Find unsupported answers and citation gaps in RAG evaluation files.
 
-> Question answered but no citation? Retrieved context present but answer vocabulary barely overlaps?
-> Source date outside your freshness window? That is a hole worth reviewing.
+## Working notes
 
-## Input
+- quick local checks around retrieval quality
+- small CI jobs where a readable report is enough
+- review workflows that need deterministic output
+- examples based on `examples/rag-cases.jsonl`
 
-Each line is a case:
-
-```json
-{"id":"refund-01","question":"How long do refunds take?","answer":"Usually two days.","citations":[],"contexts":["Refunds settle in 5-7 business days."],"source_date":"2024-01-15"}
-```
-
-## Run
+## Install
 
 ```bash
-rag-hole-finder examples/rag-cases.jsonl --min-overlap 0.25 --as-of 2026-07-03
-rag-hole-finder examples/rag-cases.jsonl --json
+git clone https://github.com/mertefekurt/rag-hole-finder.git
+cd rag-hole-finder
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e ".[dev]"
 ```
 
-## Hole labels
+## Use
 
-| label | meaning |
-| --- | --- |
-| `missing-citation` | answer has no citation list |
-| `low-context-overlap` | answer terms do not show up in retrieved context |
-| `stale-source` | source date is older than the allowed window |
-| `empty-answer` | model returned no useful answer |
+```bash
+rag-hole-finder examples/rag-cases.jsonl
+```
 
-## Development
+## Files
 
-The test suite covers JSONL parsing, overlap scoring, stale-source handling, JSON rendering, and CLI help.
-
-MIT.
+```text
+.github/        CI workflow
+examples/       sample inputs
+src/            package source
+tests/          test coverage
+.gitignore      project file
+pyproject.toml  package metadata
+```
