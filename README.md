@@ -1,14 +1,10 @@
 # RAG Hole Finder
 
-Find unsupported answers and citation gaps in RAG evaluation files.
-
 ![RAG Hole Finder cover](assets/readme-cover.svg)
 
-## What it looks for
+This project is a small, inspectable model evaluation tool. It prefers concrete examples and local files over hidden setup.
 
-- weak overlap between answer and cited material
-- stale evidence based on `--as-of` and `--max-age-days`
-- cases where the answer reads stronger than its support
+## Command line
 
 ```bash
 git clone https://github.com/mertefekurt/rag-hole-finder.git
@@ -16,3 +12,18 @@ cd rag-hole-finder
 python -m pip install -e ".[dev]"
 rag-hole-finder examples/rag-cases.jsonl --min-overlap 0.25
 ```
+
+## File map
+
+```text
+.github/        CI workflow
+examples/       sample inputs
+src/            package source
+tests/          test coverage
+.gitignore      project file
+pyproject.toml  package metadata
+```
+
+## Shape of the tool
+
+![Workflow diagram](assets/readme-diagram.svg)
